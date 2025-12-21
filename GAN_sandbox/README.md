@@ -106,8 +106,6 @@ img = image.array_to_img((real_images[0] + 1) * 127.5, scale=False)
 
 ---
 
----
-
 ```py
 img = image.array_to_img(generated_images[i] * 255., scale=False)
 ```
