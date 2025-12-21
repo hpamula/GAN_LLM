@@ -1,4 +1,4 @@
-## Changes made
+## Changes made to the originial code proposed by Francois Chollet in the 1st edition od Deep learning book
 ```py
 discriminator_optimizer = keras.optimizers.RMSprop(lr=0.0008, clipvalue=1.0, decay=1e-8)
 ```
@@ -29,7 +29,7 @@ x_train = x_train.reshape(
 
 iterations = 10000
 batch_size = 20
-save_dir = 'gan_images'
+save_dir = '/home/ubuntu/gan_images/'
 ```
 becomes
 ```py
