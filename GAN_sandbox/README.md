@@ -35,6 +35,12 @@ gan_optimizer = keras.optimizers.RMSprop(learning_rate=0.0004, clipvalue=1.0)
 gan.compile(optimizer=gan_optimizer, loss='binary_crossentropy')
 discriminator.trainable = True
 # gan.load_weights('gan.weights.h5')
+# data = np.load('training_metrics.npz')
+# d_losses = data['d_losses'].tolist()
+# a_losses = data['a_losses'].tolist()
+# steps_plotted = data['steps_plotted'].tolist()
+# average = data['average'].tolist()
+# median = data['median'].tolist()
 ```
 
 ---
@@ -102,7 +108,11 @@ print('adversarial loss at step %s: %s' % (step, a_loss))
 becomes
 ```py
 gan.save_weights(f'gan_step_{step}.weights.h5')
+np.savez(f'metrics_step_{step}.npz', d_losses=d_losses, a_losses=a_losses, steps_plotted=steps_plotted, average=average, median=median)
 previous_file = f'gan_step_{step - 100}.weights.h5'
+if os.path.exists(previous_file):
+    os.remove(previous_file)
+previous_file = f'metrics_step_{step - 100}.npz'
 if os.path.exists(previous_file):
     os.remove(previous_file)
 print(f'step {step}, discriminator loss: {d_loss:.4f}, adversarial loss: {a_loss:.4f}')
