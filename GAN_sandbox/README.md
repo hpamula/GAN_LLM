@@ -1,3 +1,15 @@
+### run 1
+![](full_run_1/training_loss.png)
+
+### run 2
+![](full_run_2_corrected_scaling/training_loss.png)
+
+### run 3
+![](unsuccessful_run_3_adam/training_loss.png)
+
+### run 4
+![](unsuccessful_run_4_adam/training_loss.png)
+
 ## Changes made to the originial code proposed by Francois Chollet in the 1st edition od Deep learning book
 ```py
 discriminator_optimizer = keras.optimizers.RMSprop(lr=0.0008, clipvalue=1.0, decay=1e-8)
@@ -45,6 +57,8 @@ os.makedirs(save_dir, exist_ok=True)
 d_losses = []
 a_losses = []
 steps_plotted = []
+average = []
+median = []
 ```
 
 ---
@@ -55,6 +69,8 @@ generated_images = generator.predict(random_latent_vectors)
 becomes
 ```py
 generated_images = generator.predict(random_latent_vectors, verbose=0)
+average.append(np.average(generated_images))
+median.append(np.median(generated_images))
 ```
 
 ---
@@ -89,7 +105,7 @@ print(f'step {step}, discriminator loss: {d_loss:.4f}, adversarial loss: {a_loss
 ```
 
 ```py
-img = image.array_to_img((generated_images[0] + 1) * 127.5, scale=False)
+img = image.array_to_img(generated_images[0] * 255., scale=False)
 img.save(os.path.join(save_dir, 'generated_frog' + str(step) + '.png'))
 
 # Save one real image, for comparison
@@ -124,6 +140,8 @@ plt.style.use('dark_background')
 plt.figure(figsize=(10, 6))
 plt.plot(steps_plotted, d_losses, label='Discriminator Loss')
 plt.plot(steps_plotted, a_losses, label='Adversarial Loss')
+plt.plot(steps_plotted, average, label='Generator output average')
+plt.plot(steps_plotted, median, label='Generator output median')
 plt.title('GAN Training Loss')
 plt.xlabel('Step')
 plt.ylabel('Loss')
@@ -139,6 +157,7 @@ plt.show()
 additional measurements
 ```py
 print(f"x_train average: {np.average(x_train):.4f}, median: {np.median(x_train):.4f}")
-...
+```
+```py
 print(f"generated_images average: {np.average(generated_images):.4f}, median: {np.median(generated_images):.4f}")
 ```
