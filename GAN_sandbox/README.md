@@ -10,6 +10,10 @@
 ### run 4
 ![](unsuccessful_run_4_adam/training_loss.png)
 
+### run 5
+![](full_run_5_adam/training_loss.png)
+![](full_run_5_adam/average_median.png)
+
 ## Changes made to the originial code proposed by Francois Chollet in the 1st edition od Deep learning book
 ```py
 discriminator_optimizer = keras.optimizers.RMSprop(lr=0.0008, clipvalue=1.0, decay=1e-8)
